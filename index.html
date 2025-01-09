@@ -38,7 +38,7 @@
       width: 300px; /* Enlarged size */
     }
 
-    #download-btn {
+    #download-cover-btn {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -51,7 +51,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    #download-btn:hover {
+    #download-cover-btn:hover {
       transform: scale(1.1);
       box-shadow: 0 0 15px white;
     }
@@ -127,12 +127,15 @@
 
       <!-- Notes -->
       <img id="note1" src="note1.png" alt="note1" class="note" style="left: 22%; top: 10%; width: 350px;">
-      <img id="note2" src="note1.png" alt="note2" class="note" style="left: 25%; top: 70%; width: 350px;">
-      <img id="note3" src="note1.png" alt="note3" class="note" style="left: 22%; top: 13%; width: 350px;">
-      <img id="note4" src="note1.png" alt="note4" class="note" style="left: 56%; top: 70%; width: 350px;">
-      <img id="note5" src="note1.png" alt="note5" class="note" style="left: 67%; top: 18%; width: 350px;">
-      <img id="note6" src="note1.png" alt="note6" class="note" style="left: 70%; top: 16%; width: 350px;">
+      <img id="note2" src="note2.png" alt="note2" class="note" style="left: 25%; top: 64%; width: 350px;">
+      <img id="note3" src="note3.png" alt="note3" class="note" style="left: 22%; top: 11%; width: 350px;">
+      <img id="note4" src="note4.png" alt="note4" class="note" style="left: 59%; top: 60%; width: 350px;">
+      <img id="note5" src="note5.png" alt="note5" class="note" style="left: 67%; top: 18%; width: 350px;">
+      <img id="note6" src="note6.png" alt="note6" class="note" style="left: 70%; top: 13%; width: 350px;">
   </div>
+
+  <!-- Download button -->
+  <a id="download-cover-btn" href="MarcelaNowak-cover.jpg" download>Download Cover</a>
 
   <script>
     function moveElement(id) {
