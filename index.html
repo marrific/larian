@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fantasy World</title>
+  <title>Marcela Nowak Larian Application</title>
   <style>
     body {
       margin: 0;
@@ -38,22 +38,57 @@
       width: 300px; /* Enlarged size */
     }
 
+    .corner-button {
+      position: fixed;
+      top: 23px;
+      right: 23px; /* Adjusted from 10px */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .corner-button img {
+      width: 60px; 
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 5px #fff8d4);
+    }
+
+    .corner-button img:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px #fff8d4);
+    }
+
     #download-cover-btn {
       position: fixed;
-      bottom: 20px;
+      bottom: 25px;
       right: 20px;
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
+      width: 120px;
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 5px #fff8d4);
     }
 
     #download-cover-btn:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 15px white;
+      filter: drop-shadow(0 0 10px #fff8d4);
+    }
+
+    #volume-btn {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      width: 30px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      /* filter: drop-shadow(0 0 5px #fff8d4); */
+    }
+
+    #volume-btn:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px #ffffff);
     }
 
     @keyframes glow {
@@ -74,7 +109,7 @@
 <body>
   <!-- Background Music -->
   <audio id="bg-music" autoplay loop>
-    <source src="DOS2.mp3" type="audio/mpeg">
+    <source src="Medieval-Work.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Click Sound -->
@@ -94,7 +129,7 @@
       <img id="wizard" src="wizard.png" alt="wizard" class="element" style="left: 30%; top: 63%; width: 250px; height: auto; transform: translate(-50%, -50%);">
 
       <!-- Button near wizard -->
-      <img src="button3.png" alt="button3" class="button" style="left: 34%; top: 42%; width: 100px; transform: translate(-50%, -50%);" 
+      <img src="button3.png" alt="button3" class="button" style="left: 34%; top: 44%; width: 100px; transform: translate(-50%, -50%);" 
       onmouseover="moveElement('wizard')" onclick="playClick(); toggleNote('note3', event)">
 
       <!-- Book image -->
@@ -126,18 +161,31 @@
       onmouseover="moveElement('lantern')" onclick="playClick(); toggleNote('note1', event)">
 
       <!-- Notes -->
-      <img id="note1" src="note1.png" alt="note1" class="note" style="left: 22%; top: 10%; width: 350px;">
-      <img id="note2" src="note2.png" alt="note2" class="note" style="left: 25%; top: 64%; width: 350px;">
-      <img id="note3" src="note3.png" alt="note3" class="note" style="left: 22%; top: 11%; width: 350px;">
-      <img id="note4" src="note4.png" alt="note4" class="note" style="left: 59%; top: 60%; width: 350px;">
-      <img id="note5" src="note5.png" alt="note5" class="note" style="left: 67%; top: 18%; width: 350px;">
-      <img id="note6" src="note6.png" alt="note6" class="note" style="left: 70%; top: 13%; width: 350px;">
+      <img id="note1" src="note1.png" alt="note1" class="note" style="left: 22%; top: 10%; width: 370px;">
+      <img id="note2" src="note2.png" alt="note2" class="note" style="left: 25%; top: 64%; width: 370px;">
+      <img id="note3" src="note3.png" alt="note3" class="note" style="left: 22%; top: 7%; width: 370px;">
+      <img id="note4" src="note4.png" alt="note4" class="note" style="left: 59%; top: 60%; width: 370px;">
+      <img id="note5" src="note5.png" alt="note5" class="note" style="left: 67%; top: 18%; width: 370px;">
+      <img id="note6" src="note6.png" alt="note6" class="note" style="left: 73%; top: 13%; width: 370px;">
+  </div>
+
+  <!-- Corner buttons -->
+  <div class="corner-button">
+    <img src="portfolio.png" alt="Portfolio" onclick="window.open('https://marcelanowak.com', '_blank')">
+    <img src="resume.png" alt="Resume" onclick="window.open('MarcelaNowak-resume.pdf', '_blank')">
+    <img src="instagram.png" alt="Instagram" onclick="window.open('https://instagram.com/marrific', '_blank')">
   </div>
 
   <!-- Download button -->
-  <a id="download-cover-btn" href="MarcelaNowak-cover.jpg" download>Download Cover</a>
+  <img id="download-cover-btn" src="full-letter.png" alt="Download Cover" onclick="window.open('MarcelaNowak-cover.jpg', '_blank')">
+
+  <!-- Volume button -->
+  <img id="volume-btn" src="volume-up.svg" alt="Volume Control" onclick="toggleMusic()">
 
   <script>
+    const bgMusic = document.getElementById('bg-music');
+    bgMusic.volume = 0.3; // Set initial volume to be quieter
+
     function moveElement(id) {
       const element = document.getElementById(id);
       element.style.transform = 'translate(-50%, -50%) scale(1.1)';
@@ -156,6 +204,17 @@
 
     function playClick() {
       document.getElementById('click-sound').play();
+    }
+
+    function toggleMusic() {
+      const volumeBtn = document.getElementById('volume-btn');
+      if (bgMusic.paused) {
+        bgMusic.play();
+        volumeBtn.src = 'volume-up.svg';
+      } else {
+        bgMusic.pause();
+        volumeBtn.src = 'no-volume.svg';
+      }
     }
   </script>
 </body>
