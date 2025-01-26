@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marcela Nowak Larian Application</title>
   <style>
+     #mobile-warning {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      z-index: 1000;
+      font-family: Arial, sans-serif;
+    }
+
+    #mobile-warning h2 {
+      margin-top: 40vh;
+      font-size: 24px;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -104,12 +124,27 @@
     #lantern {
       animation: glow 2s infinite;
     }
+    @media (max-width: 768px) {
+      #background {
+        display: none;
+      }
+      .corner-button, #download-cover-btn, #volume-btn {
+        display: none;
+      }
+      #mobile-warning {
+        display: block;
+      }
+    }
   </style>
 </head>
 <body>
+  <div id="mobile-warning">
+    <h2>Desktop Only</h2>
+    <p>Please view on a desktop device.</p>
+  </div>
   <!-- Background Music -->
   <audio id="bg-music" autoplay loop>
-    <source src="Medieval-Work.mp3" type="audio/mpeg">
+    <source src="DOS2.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Click Sound -->
@@ -158,7 +193,7 @@
 
       <!-- Button near lantern -->
       <img src="button1.png" alt="button1" class="button" style="left: 19%; top: 25%; width: 100px; transform: translate(-50%, -50%);" 
-      onmouseover="moveElement('lantern')" onclick="playClick(); toggleNote('note1', event)">
+      onmouseover="moveElement('lantern')" onclick="playClick(); toggleNote('note1', event); startAudio();">
 
       <!-- Notes -->
       <img id="note1" src="note1.png" alt="note1" class="note" style="left: 22%; top: 10%; width: 370px;">
@@ -186,6 +221,9 @@
     const bgMusic = document.getElementById('bg-music');
     bgMusic.volume = 0.3; // Set initial volume to be quieter
 
+    let musicStarted = false; // Track if music has already started
+    let currentlyOpenNote = null; // Track the currently open note
+
     function moveElement(id) {
       const element = document.getElementById(id);
       element.style.transform = 'translate(-50%, -50%) scale(1.1)';
@@ -195,15 +233,38 @@
     function toggleNote(id, event) {
       event.stopPropagation();
       const note = document.getElementById(id);
-      note.style.display = note.style.display === 'block' ? 'none' : 'block';
+
+      // If the same note is clicked, close it
+      if (currentlyOpenNote === note) {
+        note.style.display = 'none';
+        currentlyOpenNote = null;
+      } else {
+        closeAllNotes(); // Close other notes
+        note.style.display = 'block';
+        currentlyOpenNote = note;
+      }
+
+      // Ensure music starts playing if it hasn't already
+      if (!musicStarted) {
+        bgMusic.play();
+        musicStarted = true;
+      }
     }
 
     function closeAllNotes() {
       document.querySelectorAll('.note').forEach(n => n.style.display = 'none');
+      currentlyOpenNote = null; // Reset the currently open note tracker
     }
 
     function playClick() {
       document.getElementById('click-sound').play();
+    }
+
+    function startAudio() {
+      const volumeBtn = document.getElementById('volume-btn');
+      bgMusic.play();
+      volumeBtn.src = 'volume-up.svg';
+      musicStarted = true; // Update the music started status
     }
 
     function toggleMusic() {
@@ -211,11 +272,22 @@
       if (bgMusic.paused) {
         bgMusic.play();
         volumeBtn.src = 'volume-up.svg';
+        musicStarted = true;
       } else {
         bgMusic.pause();
         volumeBtn.src = 'no-volume.svg';
       }
     }
-  </script>
+
+    // Start music on any click
+    document.body.addEventListener('click', () => {
+      if (!musicStarted) {
+        bgMusic.play();
+        musicStarted = true;
+      }
+    });
+</script>
+
+
 </body>
 </html>
